@@ -7,108 +7,191 @@
     <title>AI SSE Chat 测试</title>
         
     <style>
-            * {
-              box-sizing: border-box;
-            }
+      * {
+        box-sizing: border-box;
+      }
 
-            body {
-              margin: 0;
-              min-height: 100vh;
-              font-family: system-ui, -apple-system, BlinkMacSystemFont, 'SF Pro Text',
-                'Segoe UI', sans-serif;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              background: #f5f5f5;
-              padding: 24px16px;
-            }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'SF Pro Text',
+          'Segoe UI', sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #eef2ff 0%, #f8fafc 50%, #eff6ff 100%);
+        padding: 24px 16px;
+        color: #1f2937;
+      }
 
-            .shell {
-              width: 100%;
-              max-width: 720px;
-            }
+      .shell {
+        width: 100%;
+        max-width: 760px;
+      }
 
-            h1 {
-              font-size: 20px;
-              margin: 0012px;
-            }
+      h1 {
+        font-size: 22px;
+        font-weight: 700;
+        margin: 0 0 14px;
+        letter-spacing: 0.2px;
+        color: #111827;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
 
-            .card {
-              background: #ffffff;
-              border-radius: 10px;
-              border: 1px solid #e5e7eb;
-              box-shadow: 04px12pxrgba(15, 23, 42, 0.06);
-              padding: 16px18px18px;
-            }
+      h1::before {
+        content: '';
+        display: inline-block;
+        width: 6px;
+        height: 22px;
+        border-radius: 4px;
+        background: linear-gradient(180deg, #3b82f6, #6366f1);
+      }
 
-            label {
-              display: block;
-              font-size: 13px;
-              margin-bottom: 6px;
-              color: #6b7280;
-            }
+      .card {
+        background: #ffffff;
+        border-radius: 14px;
+        border: 1px solid #e5e7eb;
+        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+        padding: 20px 22px 22px;
+      }
 
-            textarea {
-              width: 100%;
-              min-height: 80px;
-              padding: 8px10px;
-              border-radius: 8px;
-              border: 1px solid #d1d5db;
-              resize: vertical;
-              font-family: inherit;
-              font-size: 14px;
-              outline: none;
-            }
+      label {
+        display: block;
+        font-size: 13px;
+        margin-bottom: 8px;
+        color: #6b7280;
+        font-weight: 500;
+      }
 
-            textarea::placeholder {
-              color: #9ca3af;
-            }
+      textarea {
+        width: 100%;
+        min-height: 88px;
+        padding: 10px 12px;
+        border-radius: 10px;
+        border: 1px solid #d1d5db;
+        resize: vertical;
+        font-family: inherit;
+        font-size: 14px;
+        line-height: 1.5;
+        outline: none;
+        transition: border-color 0.15s ease, box-shadow 0.15s ease;
+        background: #fafafa;
+      }
 
-            textarea:focus {
-              border-color: #3b82f6;
-              box-shadow: 0001pxrgba(59, 130, 246, 0.3);
-            }
+      textarea::placeholder {
+        color: #9ca3af;
+      }
 
-            .controls {
-              display: flex;
-              align-items: center;
-              margin-top: 10px;
-              gap: 10px;
-            }
+      textarea:focus {
+        border-color: #3b82f6;
+        background: #ffffff;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.18);
+      }
 
-            button {
-              padding: 6px14px;
-              border-radius: 999px;
-              border: 1px solid #2563eb;
-              background: #3b82f6;
-              color: #ffffff;
-              font-size: 13px;
-              cursor: pointer;
-            }
+      .controls {
+        display: flex;
+        align-items: center;
+        margin-top: 12px;
+        gap: 12px;
+      }
 
-            button:disabled {
-              opacity: 0.7;
-              cursor: not-allowed;
-            }
+      button {
+        padding: 8px 18px;
+        border-radius: 999px;
+        border: none;
+        background: linear-gradient(135deg, #3b82f6, #6366f1);
+        color: #ffffff;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.12s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+      }
 
-            .status {
-              font-size: 12px;
-              color: #6b7280;
-            }
+      button:hover:not(:disabled) {
+        transform: translateY(-1px);
+        box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
+      }
 
-            .output {
-              margin-top: 16px;
-              padding: 10px10px;
-              border-radius: 8px;
-              background: #111827;
-              color: #e5e7eb;
-              font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-                'Liberation Mono', 'Courier New', monospace;
-              white-space: pre-wrap;
-              max-height: 360px;
-              overflow-y: auto;
-            }
-          
+      button:active:not(:disabled) {
+        transform: translateY(0);
+      }
+
+      button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        box-shadow: none;
+      }
+
+      .status {
+        font-size: 12px;
+        color: #6b7280;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .status::before {
+        content: '';
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #9ca3af;
+        box-shadow: 0 0 0 0 rgba(156, 163, 175, 0.5);
+      }
+
+      .status.connected::before {
+        background: #22c55e;
+        animation: pulse 1.4s ease-out infinite;
+      }
+
+      .status.error::before {
+        background: #ef4444;
+      }
+
+      @keyframes pulse {
+        0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5); }
+        70% { box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+      }
+
+      .output {
+        margin-top: 16px;
+        padding: 14px 16px;
+        border-radius: 10px;
+        background: #0f172a;
+        color: #e5e7eb;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+          'Liberation Mono', 'Courier New', monospace;
+        font-size: 13px;
+        line-height: 1.6;
+        white-space: pre-wrap;
+        word-break: break-word;
+        max-height: 420px;
+        overflow-y: auto;
+        min-height: 56px;
+      }
+
+      .output:empty::before {
+        content: 'AI 的回复将显示在这里…';
+        color: #64748b;
+        font-style: italic;
+      }
+
+      .output::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      .output::-webkit-scrollbar-thumb {
+        background: #334155;
+        border-radius: 4px;
+      }
+
+      .output::-webkit-scrollbar-track {
+        background: transparent;
+      }
     </style>
   </head>
   <body>
@@ -163,6 +246,7 @@
         closeEventSource();
         outputEl.textContent = '';
         sendBtn.disabled = true;
+        statusEl.classList.remove('connected', 'error');
         statusEl.textContent = '状态：连接中…';
 
         const url = `/ai/chat/stream?query=${encodeURIComponent(query)}`;
@@ -170,6 +254,8 @@
 
         es.onopen = () => {
           statusEl.textContent = '状态：已连接，流式接收中…';
+          statusEl.classList.remove('error');
+          statusEl.classList.add('connected');
         };
 
         es.onmessage = (event) => {
@@ -179,6 +265,8 @@
 
         es.onerror = () => {
           statusEl.textContent = '状态：连接结束或发生错误';
+          statusEl.classList.remove('connected');
+          statusEl.classList.add('error');
           closeEventSource();
         };
       };

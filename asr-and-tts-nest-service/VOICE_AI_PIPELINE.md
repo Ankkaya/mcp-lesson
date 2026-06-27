@@ -323,9 +323,7 @@ handleAiStreamEvent(event: AiTtsStreamEvent): void {
 
 ### 5.6 缓冲与 flush
 
-`tts-relay.service.ts:193-206`
-
-`tts-relay.service.ts:208-221` 是**重复定义**（见第八节已知问题）。
+`tts-relay.service.ts:209-222`
 
 `pendingChunks` 的存在理由：腾讯 WS `open` 后还要等它回 `{ready:1}` 才能收文本，提前发的会被丢。所以 chunk 先排队，等 `ready==1` 再 flush。
 
@@ -424,35 +422,7 @@ AI SSE chunk (ai.service.ts)
 
 ---
 
-## 八、已知问题与待办
-
-### 关键 Bug
-
-1. **`sendTencentChunk` 方法缺失（TTS 实际无法工作）**
-   `tts-relay.service.ts:93` 和 `193-221` 调用了 `this.sendTencentChunk(session, chunk)`，但类中**从未定义**该方法。腾讯 WS 一旦 ready 即抛 `TypeError`，导致无音频输出。需补一个向腾讯 WS 发送文本帧的方法（如 `{ session_id, action:'ACTION_TEXT', data: chunk }`，具体字段需对照腾讯云 WS v2 文档）。
-
-2. **腾讯云凭据缺失（`.env` 中未配置）**
-   `.env` 中没有 `SECRET_ID` / `SECRET_KEY` / `APP_ID` / `TTS_VOICE_TYPE`，导致 ASR 调用鉴权失败，TTS 直接走入"凭证缺失"分支。需在 `.env` 补齐并创建 `.env.example` 模板。
-
-### 中等问题
-
-3. **`flushPendingChunks` 重复定义**（`tts-relay.service.ts:193-221`）：方法体完全相同出现两次，应删除其一。
-
-4. **无 `.env.example`**：当前 `.env` 含真实密钥且疑似未忽略版本控制，应创建 `.env.example` 并确认 `.gitignore` 包含 `.env`。
-
-### 设计约束（非 bug，但需在文档中说明）
-
-5. **WebSocket 非双向**：`main.ts` 只注册 `socket.on('close')`，浏览器无法发控制消息（停止/暂停/换音色）。
-
-6. **SSE 完成靠 `onerror`**：前端用 `EventSource.onerror` 判断流结束，无显式终止事件。建议引入约定的结束帧或显式 `[DONE]` 标记。
-
-7. **ASR `VoiceFormat` 硬编码 `ogg-opus`**：与前端 `MediaRecorder` 必须保持一致；浏览器回退 `webm` 时 ASR 会失败或乱码。
-
-8. **TTS WebSocket 非 NestJS Gateway**：用 `ws` 库在 `main.ts` 挂载，`TtsRelayService` 通过 `app.get()` 取实例而非 DI 注入；这是导出 `TtsRelayService` 的原因，也是一种有意为之的简化。
-
----
-
-## 九、环境变量清单
+## 八、环境变量清单
 
 代码中实际读取的变量：
 

@@ -9,5 +9,15 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs"
+  "type": "commonjs",
+  "dependencies": {
+    "@elastic/elasticsearch": "^9.4.2",
+    "@langchain/community": "^1.1.29",
+    "@langchain/core": "^1.2.2",
+    "@langchain/langgraph": "^1.4.7",
+    "@langchain/openai": "^1.5.5",
+    "@zilliz/milvus2-sdk-node": "^3.0.3",
+    "dotenv": "^17.4.2",
+    "zod": "^4.4.3"
+  }
 }

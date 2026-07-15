@@ -4,3 +4,6 @@ milvus
 
 # Elasticsearch generated index data
 /es-test/volumes/es/data/
+
+# Neo4j node/graph data (docker volumes)
+/neo4j-graphrag/volumes/

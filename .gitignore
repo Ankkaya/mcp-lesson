@@ -7,3 +7,6 @@ milvus
 
 # Neo4j node/graph data (docker volumes)
 /neo4j-graphrag/volumes/
+
+# PostgreSQL/pgvector + pgAdmin data (docker volumes)
+/pgsql-test/volumes/

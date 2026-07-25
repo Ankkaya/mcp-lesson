@@ -10,3 +10,6 @@ milvus
 
 # PostgreSQL/pgvector + pgAdmin data (docker volumes)
 /pgsql-test/volumes/
+
+# Redis + RedisInsight data (docker volumes)
+/redis-test/volumes/

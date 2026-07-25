@@ -1,0 +1,15 @@
+# Dependencies
+node_modules/
+
+# Local secrets / env
+.env
+.env.*
+!.env.example
+
+# Docker volume data (Redis AOF/RDB, RedisInsight)
+volumes/
+
+# Logs & local runtime
+*.log
+.DS_Store
+Thumbs.db

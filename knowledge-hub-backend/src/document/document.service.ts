@@ -8,7 +8,7 @@ import { InjectEntityManager } from '@nestjs/typeorm';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { EntityManager } from 'typeorm';
-import { nextSnowflakeId } from '../common/snowflake-id';
+import { nextSnowflakeId } from '../common/snowflake-ids';
 import { CreateDocumentDto } from './dto/create-document.dto';
 import { UpdateDocumentDto } from './dto/update-document.dto';
 import { QueryDocumentDto } from './dto/query-document.dto';

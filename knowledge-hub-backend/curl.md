@@ -96,3 +96,4 @@ curl -s -X DELETE "http://localhost:3000/documents/${DOC_ID}" | jq
 ---
 
 未安装 `jq` 时去掉 `| jq` 即可。
+ 

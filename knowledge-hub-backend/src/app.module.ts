@@ -7,11 +7,13 @@ import { AppService } from './app.service';
 import { DocumentModule } from './document/document.module';
 import { DocumentEntity } from './document/entities/document.entity';
 import { StorageModule } from './storage/storage.module';
+import { MqModule } from './mq/mq.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     StorageModule,
+    MqModule,
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
